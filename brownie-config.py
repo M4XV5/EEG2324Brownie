@@ -6,18 +6,18 @@ from mne import Covariance
 from mne_bids import BIDSPath
 
 from mne_bids_pipeline.typing import (
-#     PathLike,
-#     ArbitraryContrast,
-#     FloatArrayLike,
-#     DigMontageType,
-# )
+    PathLike,
+    ArbitraryContrast,
+    FloatArrayLike,
+    DigMontageType,
+)
 
 
 ###############################################################################
 # Config parameters
 # -----------------
 
-# study_name: str = "EEG2324Brownie"
+study_name: str = "EEG2324Brownie"
 # """
 # Specify the name of your study. It will be used to populate filenames for
 # saving the analysis results.
@@ -28,7 +28,7 @@ from mne_bids_pipeline.typing import (
 #     ```
 # """
 
-# bids_root: Optional[PathLike] = None
+bids_root = "./Dataset/ds004147"
 # """
 # Specify the BIDS root directory. Pass an empty string or ```None` to use
 # the value specified in the `BIDS_ROOT` environment variable instead.
@@ -73,7 +73,7 @@ from mne_bids_pipeline.typing import (
 #     and want to run the source analysis steps.
 # """
 
-# interactive: bool = False
+interactive = True
 # """
 # If True, the steps will provide some interactive elements, such as
 # figures. If running the steps from a notebook or Spyder,
@@ -152,7 +152,7 @@ from mne_bids_pipeline.typing import (
 # plotting.
 # """
 
-# subjects: Union[Iterable[str], Literal["all"]] = "all"
+subjects = ['27'] # analysing only subject 27 for the initial test run
 # """
 # Subjects to analyze. If `'all'`, include all subjects. To only
 # include a subset of subjects, pass a list of their identifiers. Even
@@ -194,7 +194,7 @@ from mne_bids_pipeline.typing import (
 # automatically.
 # """
 
-# process_rest: bool = True
+process_rest = True # assuming resting state for initial testing
 # """
 # Whether to apply the same pre-processing steps to the resting-state data as
 # to the experimental data (up until including frequency filtering). This
@@ -202,7 +202,7 @@ from mne_bids_pipeline.typing import (
 # covariance (via `noise_cov='rest'`).
 # """
 
-# ch_types: Iterable[Literal["meg", "mag", "grad", "eeg"]] = []
+ch_types = ['eeg']
 # """
 # The channel types to consider.
 
@@ -219,7 +219,7 @@ from mne_bids_pipeline.typing import (
 #     ```
 # """
 
-# data_type: Optional[Literal["meg", "eeg"]] = None
+data_type = 'eeg'
 # """
 # The BIDS data type.
 
@@ -353,7 +353,7 @@ from mne_bids_pipeline.typing import (
 # the cap manufacturers in their respective manual.
 
 # Please be aware that the actual cap placement most likely deviated somewhat
-from the template, and, therefore, source reconstruction may be impaired.
+# from the template, and, therefore, source reconstruction may be impaired.
 
 # If `None`, do not apply a template montage. If a string, must be the
 # name of a built-in template montage in MNE-Python.
@@ -1032,7 +1032,7 @@ from the template, and, therefore, source reconstruction may be impaired.
 #     ```
 # """
 
-# task_is_rest: bool = False
+task_is_rest: bool = True # assuming resting state for initial testing
 # """
 # Whether the task should be treated as resting-state data.
 # """
