@@ -833,7 +833,7 @@ data_type = 'eeg'
 # Specifies the width of each stop band. `None` uses the MNE default.
 # """
 
-# raw_resample_sfreq: Optional[float] = None
+raw_resample_sfreq = 250
 # """
 # Specifies at which sampling frequency the data should be resampled.
 # If `None`, then no resampling will be done.
