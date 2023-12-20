@@ -73,7 +73,7 @@ bids_root = "./Dataset/ds004147"
 #     and want to run the source analysis steps.
 # """
 
-interactive = True
+interactive = False
 # """
 # If True, the steps will provide some interactive elements, such as
 # figures. If running the steps from a notebook or Spyder,
@@ -152,7 +152,7 @@ interactive = True
 # plotting.
 # """
 
-subjects = ['27'] # analysing only subject 27 for the initial test run
+subjects = ['27'] # analysing only one subject for the initial test run
 # """
 # Subjects to analyze. If `'all'`, include all subjects. To only
 # include a subset of subjects, pass a list of their identifiers. Even
@@ -194,7 +194,7 @@ subjects = ['27'] # analysing only subject 27 for the initial test run
 # automatically.
 # """
 
-process_rest = True # assuming resting state for initial testing
+process_rest = False
 # """
 # Whether to apply the same pre-processing steps to the resting-state data as
 # to the experimental data (up until including frequency filtering). This
@@ -253,7 +253,7 @@ data_type = 'eeg'
 #     ```
 # """
 
-# eog_channels: Optional[Iterable[str]] = None
+eog_channels = ['Fp1', 'Fp2']
 # """
 # Specify EOG channels to use, or create virtual EOG channels.
 
@@ -321,7 +321,7 @@ data_type = 'eeg'
 #     ```
 # """
 
-# eeg_reference: Union[Literal["average"], str, Iterable["str"]] = "average"
+eeg_reference = ['TP9', 'TP10']
 # """
 # The EEG reference to use. If `average`, will use the average reference,
 # i.e. the average across all channels. If a string, must be the name of a single
@@ -430,7 +430,7 @@ data_type = 'eeg'
 # BREAK DETECTION
 # ---------------
 
-# find_breaks: bool = False
+find_breaks = True
 # """
 # During an experimental run, the recording might be interrupted by breaks of
 # various durations, e.g. to allow the participant to stretch, blink, and swallow
@@ -980,7 +980,21 @@ raw_resample_sfreq = 250
 #     ```
 # """  # noqa: E501
 
-# conditions: Optional[Union[Iterable[str], Dict[str, str]]] = None
+conditions = [
+"S  2",
+"S 13",
+"S 23",
+"S 33",
+"S  3",
+"S  6",
+"S 16",
+"S 26",
+"S 36",
+"S  7",
+"S 17",
+"S 27",
+"S 37"
+]
 # """
 # The time-locked events based on which to create evoked responses.
 # This can either be name of the experimental condition as specified in the
@@ -1013,7 +1027,7 @@ raw_resample_sfreq = 250
 #                   'incorrect': 'response/incorrect'}
 # """  # noqa : E501
 
-# epochs_tmin: float = -0.2
+epochs_tmin = -0.2
 # """
 # The beginning of an epoch, relative to the respective event, in seconds.
 
@@ -1023,7 +1037,7 @@ raw_resample_sfreq = 250
 #     ```
 # """
 
-# epochs_tmax: float = 0.5
+epochs_tmax = 0.6
 # """
 # The end of an epoch, relative to the respective event, in seconds.
 # ???+ example "Example"
@@ -1032,7 +1046,7 @@ raw_resample_sfreq = 250
 #     ```
 # """
 
-task_is_rest: bool = True # assuming resting state for initial testing
+task_is_rest: bool = False
 # """
 # Whether the task should be treated as resting-state data.
 # """
@@ -1126,7 +1140,7 @@ task_is_rest: bool = True # assuming resting state for initial testing
 #
 # Currently you cannot use both.
 
-# spatial_filter: Optional[Literal["ssp", "ica"]] = None
+spatial_filter = "ica"
 # """
 # Whether to use a spatial filter to detect and remove artifacts. The BIDS
 # Pipeline offers the use of signal-space projection (SSP) and independent
@@ -1325,7 +1339,7 @@ task_is_rest: bool = True # assuming resting state for initial testing
 # limit may be too low to achieve convergence.
 # """
 
-# ica_n_components: Optional[Union[float, int]] = 0.8
+ica_n_components = 0.9999 # error with default 0.8 since PCA returned 1 component only. 
 # """
 # MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
 # on the data (trying to exclude zero-valued components in rank-deficient
@@ -1362,7 +1376,7 @@ task_is_rest: bool = True # assuming resting state for initial testing
 # The threshold parameter passed to `find_bads_ecg` method.
 # """
 
-# ica_eog_threshold: float = 3.0
+ica_eog_threshold: float = 2.0
 # """
 # The threshold to use during automated EOG classification. Lower values mean
 # that more ICs will be identified as EOG-related. If too low, the
@@ -1372,9 +1386,7 @@ task_is_rest: bool = True # assuming resting state for initial testing
 # Rejection based on peak-to-peak amplitude
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# reject: Optional[
-#     Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
-# ] = None
+reject = {"eeg":150e-6}
 # """
 # Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
 # epochs with strong transient artifacts.
