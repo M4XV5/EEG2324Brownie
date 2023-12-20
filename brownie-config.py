@@ -778,19 +778,19 @@ find_breaks = True
 # --------------------------------
 # done in 02-frequency_filter.py
 
-# l_freq: Optional[float] = None
+l_freq = 0.1
 # """
 # The low-frequency cut-off in the highpass filtering step.
 # Keep it `None` if no highpass filtering should be applied.
 # """
 
-# h_freq: Optional[float] = 40.0
+h_freq = 50.0
 # """
 # The high-frequency cut-off in the lowpass filtering step.
 # Keep it `None` if no lowpass filtering should be applied.
 # """
 
-# notch_freq: Optional[Union[float, Iterable[float]]] = None
+notch_freq = 50.0
 # """
 # Notch filter frequency. More than one frequency can be supplied, e.g. to remove
 # harmonics. Keep it `None` if no notch filter should be applied.
@@ -833,7 +833,7 @@ find_breaks = True
 # Specifies the width of each stop band. `None` uses the MNE default.
 # """
 
-raw_resample_sfreq = 250
+raw_resample_sfreq = 150
 # """
 # Specifies at which sampling frequency the data should be resampled.
 # If `None`, then no resampling will be done.
