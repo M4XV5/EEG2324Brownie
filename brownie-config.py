@@ -73,7 +73,7 @@ bids_root = "./Dataset/ds004147"
 #     and want to run the source analysis steps.
 # """
 
-interactive = True
+interactive = False
 # """
 # If True, the steps will provide some interactive elements, such as
 # figures. If running the steps from a notebook or Spyder,
@@ -778,19 +778,19 @@ data_type = 'eeg'
 # --------------------------------
 # done in 02-frequency_filter.py
 
-# l_freq: Optional[float] = None
+l_freq = 0.1
 # """
 # The low-frequency cut-off in the highpass filtering step.
 # Keep it `None` if no highpass filtering should be applied.
 # """
 
-# h_freq: Optional[float] = 40.0
+h_freq = 50.0
 # """
 # The high-frequency cut-off in the lowpass filtering step.
 # Keep it `None` if no lowpass filtering should be applied.
 # """
 
-# notch_freq: Optional[Union[float, Iterable[float]]] = None
+notch_freq = 50.0
 # """
 # Notch filter frequency. More than one frequency can be supplied, e.g. to remove
 # harmonics. Keep it `None` if no notch filter should be applied.
@@ -1032,7 +1032,7 @@ raw_resample_sfreq = 150
 #     ```
 # """
 
-task_is_rest: bool = True # assuming resting state for initial testing
+task_is_rest: bool = True # assuming resting state for initial testing, since we have not yet done epoching
 # """
 # Whether the task should be treated as resting-state data.
 # """
