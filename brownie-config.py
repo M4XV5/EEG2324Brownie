@@ -321,7 +321,7 @@ data_type = 'eeg'
 #     ```
 # """
 
-# eeg_reference: Union[Literal["average"], str, Iterable["str"]] = "average"
+eeg_reference = ['P9', 'P10']
 # """
 # The EEG reference to use. If `average`, will use the average reference,
 # i.e. the average across all channels. If a string, must be the name of a single
