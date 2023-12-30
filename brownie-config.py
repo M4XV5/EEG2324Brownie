@@ -253,7 +253,7 @@ data_type = 'eeg'
 #     ```
 # """
 
-eog_channels = ['Fp1', 'Fp2']
+# eog_channels: Optional[Iterable[str]] = None
 # """
 # Specify EOG channels to use, or create virtual EOG channels.
 
@@ -430,7 +430,7 @@ eeg_reference = ['TP9', 'TP10']
 # BREAK DETECTION
 # ---------------
 
-find_breaks = True
+# find_breaks: bool = False
 # """
 # During an experimental run, the recording might be interrupted by breaks of
 # various durations, e.g. to allow the participant to stretch, blink, and swallow
@@ -980,21 +980,7 @@ raw_resample_sfreq = 150
 #     ```
 # """  # noqa: E501
 
-conditions = [
-"S  2",
-"S 13",
-"S 23",
-"S 33",
-"S  3",
-"S  6",
-"S 16",
-"S 26",
-"S 36",
-"S  7",
-"S 17",
-"S 27",
-"S 37"
-]
+# conditions: Optional[Union[Iterable[str], Dict[str, str]]] = None
 # """
 # The time-locked events based on which to create evoked responses.
 # This can either be name of the experimental condition as specified in the
@@ -1027,7 +1013,7 @@ conditions = [
 #                   'incorrect': 'response/incorrect'}
 # """  # noqa : E501
 
-epochs_tmin = -0.2
+# epochs_tmin: float = -0.2
 # """
 # The beginning of an epoch, relative to the respective event, in seconds.
 
@@ -1037,7 +1023,7 @@ epochs_tmin = -0.2
 #     ```
 # """
 
-epochs_tmax = 0.6
+# epochs_tmax: float = 0.5
 # """
 # The end of an epoch, relative to the respective event, in seconds.
 # ???+ example "Example"
@@ -1046,7 +1032,7 @@ epochs_tmax = 0.6
 #     ```
 # """
 
-task_is_rest: bool = False
+task_is_rest: bool = True
 # """
 # Whether the task should be treated as resting-state data.
 # """
@@ -1140,7 +1126,7 @@ task_is_rest: bool = False
 #
 # Currently you cannot use both.
 
-spatial_filter = "ica"
+# spatial_filter = "ica"
 # """
 # Whether to use a spatial filter to detect and remove artifacts. The BIDS
 # Pipeline offers the use of signal-space projection (SSP) and independent
@@ -1339,7 +1325,7 @@ spatial_filter = "ica"
 # limit may be too low to achieve convergence.
 # """
 
-ica_n_components = 0.9999 # error with default 0.8 since PCA returned 1 component only. 
+# ica_n_components: Optional[Union[float, int]] = 0.8
 # """
 # MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
 # on the data (trying to exclude zero-valued components in rank-deficient
@@ -1376,7 +1362,7 @@ ica_n_components = 0.9999 # error with default 0.8 since PCA returned 1 componen
 # The threshold parameter passed to `find_bads_ecg` method.
 # """
 
-ica_eog_threshold: float = 2.0
+# ica_eog_threshold: float = 2.0
 # """
 # The threshold to use during automated EOG classification. Lower values mean
 # that more ICs will be identified as EOG-related. If too low, the
