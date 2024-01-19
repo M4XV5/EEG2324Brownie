@@ -52,7 +52,7 @@ bids_root = "./Dataset/ds004147"
 #     set [`subjects_dir`][mne_bids_pipeline._config.subjects_dir] as well.
 # """
 
-# subjects_dir: Optional[PathLike] = None
+subjects_dir: Optional[PathLike] = './derivatives/freesurfer/subjects'
 # """
 # Path to the directory that contains the FreeSurfer reconstructions of all
 # subjects. Specifically, this defines the `SUBJECTS_DIR` that is used by
@@ -90,7 +90,7 @@ interactive = False
 # BIDS dataset.
 # """
 
-# task: str = ""
+task: str = "casinos"
 # """
 # The task to process.
 # """
@@ -152,7 +152,7 @@ interactive = False
 # plotting.
 # """
 
-subjects = ['27'] # analysing only subject 27 for the initial test run
+subjects = 'all' # analysing only subject 27 for the initial test run
 # """
 # Subjects to analyze. If `'all'`, include all subjects. To only
 # include a subset of subjects, pass a list of their identifiers. Even
@@ -321,7 +321,7 @@ data_type = 'eeg'
 #     ```
 # """
 
-eeg_reference = ['P9', 'P10']
+eeg_reference = ['TP9', 'TP10']
 # """
 # The EEG reference to use. If `average`, will use the average reference,
 # i.e. the average across all channels. If a string, must be the name of a single
@@ -406,6 +406,8 @@ eeg_reference = ['P9', 'P10']
 #     analyze_channels = ['Pz']
 #     ```
 # """
+# analyze_channels = ['FCz']
+
 
 # reader_extra_params: dict = {}
 # """
@@ -790,7 +792,7 @@ h_freq = 50.0
 # Keep it `None` if no lowpass filtering should be applied.
 # """
 
-notch_freq = 50.0
+notch_freq = 50
 # """
 # Notch filter frequency. More than one frequency can be supplied, e.g. to remove
 # harmonics. Keep it `None` if no notch filter should be applied.
@@ -833,7 +835,7 @@ notch_freq = 50.0
 # Specifies the width of each stop band. `None` uses the MNE default.
 # """
 
-raw_resample_sfreq = 150
+raw_resample_sfreq = None
 # """
 # Specifies at which sampling frequency the data should be resampled.
 # If `None`, then no resampling will be done.
@@ -899,7 +901,7 @@ raw_resample_sfreq = 150
 # HANDLING OF REPEATED EVENTS
 # ---------------------------
 
-# event_repeated: Literal["error", "drop", "merge"] = "error"
+# event_repeated: Literal["error", "drop", "merge"] = "drop"
 # """
 # How to handle repeated events. We call events "repeated" if more than one event
 # occurred at the exact same time point. Currently, MNE-Python cannot handle
@@ -980,7 +982,12 @@ raw_resample_sfreq = 150
 #     ```
 # """  # noqa: E501
 
-# conditions: Optional[Union[Iterable[str], Dict[str, str]]] = None
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2',
+                                                              'Stimulus/S  6', 
+                                                              'Stimulus/S  7',
+                                                              'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
+                                                              'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
+                                                              'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
 # """
 # The time-locked events based on which to create evoked responses.
 # This can either be name of the experimental condition as specified in the
@@ -1013,7 +1020,7 @@ raw_resample_sfreq = 150
 #                   'incorrect': 'response/incorrect'}
 # """  # noqa : E501
 
-# epochs_tmin: float = -0.2
+epochs_tmin: float = -0.2
 # """
 # The beginning of an epoch, relative to the respective event, in seconds.
 
@@ -1023,7 +1030,7 @@ raw_resample_sfreq = 150
 #     ```
 # """
 
-# epochs_tmax: float = 0.5
+epochs_tmax: float = 0.6
 # """
 # The end of an epoch, relative to the respective event, in seconds.
 # ???+ example "Example"
@@ -1032,12 +1039,12 @@ raw_resample_sfreq = 150
 #     ```
 # """
 
-task_is_rest: bool = True # assuming resting state for initial testing, since we have not yet done epoching
+task_is_rest: bool = False # assuming resting state for initial testing, since we have not yet done epoching
 # """
 # Whether the task should be treated as resting-state data.
 # """
 
-# rest_epochs_duration: Optional[float] = None
+# rest_epochs_duration: Optional[float] = 0.8
 # """
 # Duration of epochs in seconds.
 # """
@@ -1059,7 +1066,7 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 #     ```
 # """
 
-# contrasts: Iterable[Union[Tuple[str, str], ArbitraryContrast]] = []
+contrasts: Iterable[Union[Tuple[str, str], ArbitraryContrast]] = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
 # """
 # The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 # can either be tuples or dictionaries (or a mix of both). Each element in the
@@ -1126,7 +1133,7 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 #
 # Currently you cannot use both.
 
-# spatial_filter: Optional[Literal["ssp", "ica"]] = None
+spatial_filter: Optional[Literal["ssp", "ica"]] = 'ica'
 # """
 # Whether to use a spatial filter to detect and remove artifacts. The BIDS
 # Pipeline offers the use of signal-space projection (SSP) and independent
@@ -1230,7 +1237,7 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 # Channel to use for ECG SSP. Can be useful when the autodetected ECG channel
 # is not reliable.
 # """
-
+ica_reject_components = "auto"
 # Rejection based on ICA
 # ~~~~~~~~~~~~~~~~~~~~~~
 # ica_reject: Optional[Union[Dict[str, float], Literal["autoreject_local"]]] = None
@@ -1282,9 +1289,9 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 #     ```
 # """
 
-# ica_algorithm: Literal[
-#     "picard", "fastica", "extended_infomax", "picard-extended_infomax"
-# ] = "picard"
+ica_algorithm: Literal[
+    "picard", "fastica", "extended_infomax", "picard-extended_infomax"
+] = "extended_infomax"
 # """
 # The ICA algorithm to use. `"picard-extended_infomax"` operates `picard` such that the
 # generated ICA decomposition is identical to the one generated by the extended Infomax
@@ -1312,7 +1319,7 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 #     us so we can discuss.
 # """
 
-# ica_max_iterations: int = 500
+ica_max_iterations: int = 500
 # """
 # Maximum number of iterations to decompose the data into independent
 # components. A low number means to finish earlier, but the consequence is
@@ -1325,7 +1332,7 @@ task_is_rest: bool = True # assuming resting state for initial testing, since we
 # limit may be too low to achieve convergence.
 # """
 
-# ica_n_components: Optional[Union[float, int]] = 0.8
+ica_n_components: Optional[Union[float, int]] = 0.95
 # """
 # MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
 # on the data (trying to exclude zero-valued components in rank-deficient
