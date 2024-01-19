@@ -15,17 +15,14 @@ bids_root = "./Dataset/ds004147"
 interactive = False
 task: str = "casinos"
 
-subjects = ['27']#'all' # analysing only one subject for the initial test run
-if(3<4): # testing how to run normal python code within the config. This code here does change the subject considered to 28 instead of 27
-    subjects = ['28']
-
+subjects = ['all']
 # our analysis did not return any subjects that satisfied the exclusion criteria
 # exclude_subjects: Iterable[str] = [] 
 
 ch_types = ['eeg']
 data_type = 'eeg'
 
-eeg_reference = ['TP9', 'TP10']
+eeg_reference = ['TP9', 'TP10'] #rereference to the average of the mastoid signals
 
 # drop_channels: Iterable[str] = []
 
@@ -101,15 +98,19 @@ raw_resample_sfreq = 150
 #     ```
 # """  # noqa: E501
 
-# conditions: Optional[Union[Iterable[str], Dict[str, str]]] = None
+conditions = ['S  2', 'S  6', 'S  7',
+'S 12', 'S 16', 'S 17',
+'S 22', 'S 26', 'S 27',
+'S 32', 'S 36', 'S 37'
+]
 
-# epochs relative to the beep events
-epochs_tmin: float = -1.2
-epochs_tmax: float = -0.6
+# epochs relative to the stimulus (/ # beep) events
+epochs_tmin: float = -0.2 # -1.2
+epochs_tmax: float = 0.6 # -0.6
 
-task_is_rest: bool = True
+task_is_rest: bool = False
 
-# baseline: Optional[Tuple[Optional[float], Optional[float]]] = (None, 0)
+# baseline = (-0.2, 0)
 # """
 # Specifies which time interval to use for baseline correction of epochs;
 # if `None`, no baseline correction is applied.
@@ -120,7 +121,16 @@ task_is_rest: bool = True
 #     ```
 # """
 
-# contrasts: Iterable[Union[Tuple[str, str], ArbitraryContrast]] = []
+contrasts = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
+# contrasts = [
+#         {
+#             'name': 'winVsLossContrast',
+#             'conditions': [
+#                 'S  6','S 16','S 26','S 36','S  7','S 17','S 27','S 37'
+#             ],
+#             'weights': [1, 1, 1, 1, -1, -1, -1, -1]
+#         }
+#     ]
 # """
 # The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 # can either be tuples or dictionaries (or a mix of both). Each element in the
