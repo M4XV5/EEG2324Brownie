@@ -983,12 +983,13 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2',
-                                                              'Stimulus/S  6', 
-                                                              'Stimulus/S  7',
-                                                              'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
-                                                              'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
-                                                              'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2']
+                                                            #   ,
+                                                            #   'Stimulus/S  6', 
+                                                            #   'Stimulus/S  7',
+                                                            #   'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
+                                                            #   'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
+                                                            #   'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
 """
 The time-locked events based on which to create evoked responses.
 This can either be name of the experimental condition as specified in the
