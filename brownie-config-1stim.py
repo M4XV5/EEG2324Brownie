@@ -385,12 +385,12 @@ channel. To use multiple channels as reference, set to a list of channel names.
 #     ```
 # """
 
-analyze_channels: Union[
-    Literal["all"], Literal["ch_types"], Iterable["str"]
-] = "ch_types"
 # analyze_channels: Union[
 #     Literal["all"], Literal["ch_types"], Iterable["str"]
-# ] = ['FCz']
+# ] = "ch_types"
+analyze_channels: Union[
+    Literal["all"], Literal["ch_types"], Iterable["str"]
+] = ['FCz']
 """
 The names of the channels to analyze during ERP/ERF and time-frequency analysis
 steps. For certain paradigms, e.g. EEG ERP research, it is common to constrain
@@ -983,7 +983,7 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2']
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S 37']
                                                             #   ,
                                                             #   'Stimulus/S  6', 
                                                             #   'Stimulus/S  7',
@@ -1242,11 +1242,11 @@ ways using the configuration options you can find below.
 
 # Rejection based on ICA
 # ~~~~~~~~~~~~~~~~~~~~~~
-# ica_reject: Optional[Union[Dict[str, float], Literal["autoreject_local"]]] = None
-# """
-# Peak-to-peak amplitude limits to exclude epochs from ICA fitting. This allows you to
-# remove strong transient artifacts from the epochs used for fitting ICA, which could
-# negatively affect ICA performance. 
+ica_reject: Optional[Union[Dict[str, float], Literal["autoreject_local"]]] = 'autoreject_local'
+"""
+Peak-to-peak amplitude limits to exclude epochs from ICA fitting. This allows you to
+remove strong transient artifacts from the epochs used for fitting ICA, which could
+negatively affect ICA performance. 
 
 # The parameter values are the same as for [`reject`][mne_bids_pipeline._config.reject],
 # but `"autoreject_global"` is not supported. `"autoreject_local"` here behaves
@@ -1381,9 +1381,9 @@ ways using the configuration options you can find below.
 # Rejection based on peak-to-peak amplitude
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# reject: Optional[
-#     Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
-# ] = None
+reject: Optional[
+    Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
+] = 'autoreject_local'
 # """
 # Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
 # epochs with strong transient artifacts.
