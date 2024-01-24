@@ -17,7 +17,7 @@ from mne_bids_pipeline.typing import (
 # Config parameters
 # -----------------
 
-study_name: str = ""
+study_name: str = "EEG2324Brownie"
 """
 Specify the name of your study. It will be used to populate filenames for
 saving the analysis results.
@@ -28,7 +28,7 @@ saving the analysis results.
     ```
 """
 
-bids_root: Optional[PathLike] = None
+bids_root: Optional[PathLike] = './Dataset/ds004147'
 """
 Specify the BIDS root directory. Pass an empty string or ```None` to use
 the value specified in the `BIDS_ROOT` environment variable instead.
@@ -52,7 +52,7 @@ the processing results. If `None`, this will be
     set [`subjects_dir`][mne_bids_pipeline._config.subjects_dir] as well.
 """
 
-subjects_dir: Optional[PathLike] = None
+subjects_dir: Optional[PathLike] = './derivatives/freesurfer/subjects'
 """
 Path to the directory that contains the FreeSurfer reconstructions of all
 subjects. Specifically, this defines the `SUBJECTS_DIR` that is used by
@@ -90,7 +90,7 @@ The sessions to process. If `'all'`, will process all sessions found in the
 BIDS dataset.
 """
 
-task: str = ""
+task: str = "casinos"
 """
 The task to process.
 """
@@ -152,7 +152,8 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects: Union[Iterable[str], Literal["all"]] = "all"
+# subjects: Union[Iterable[str], Literal["all"]] = "all"
+subjects = ['27']
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
 include a subset of subjects, pass a list of their identifiers. Even
@@ -202,7 +203,7 @@ is required if you wish to use the resting-state recording to estimate noise
 covariance (via `noise_cov='rest'`).
 """
 
-ch_types: Iterable[Literal["meg", "mag", "grad", "eeg"]] = []
+ch_types: Iterable[Literal["meg", "mag", "grad", "eeg"]] = ['eeg']
 """
 The channel types to consider.
 
@@ -219,7 +220,7 @@ The channel types to consider.
     ```
 """
 
-data_type: Optional[Literal["meg", "eeg"]] = None
+data_type: Optional[Literal["meg", "eeg"]] = 'eeg'
 """
 The BIDS data type.
 
@@ -321,7 +322,8 @@ Can also be `None` if you do not want to create bipolar channels.
     ```
 """
 
-eeg_reference: Union[Literal["average"], str, Iterable["str"]] = "average"
+# eeg_reference: Union[Literal["average"], str, Iterable["str"]] = "average"
+eeg_reference: Union[Literal["average"], str, Iterable["str"]] = ['TP9', 'TP10']
 """
 The EEG reference to use. If `average`, will use the average reference,
 i.e. the average across all channels. If a string, must be the name of a single
@@ -385,9 +387,10 @@ to remove the anode, cathode, or both.
     ```
 """
 
-analyze_channels: Union[
-    Literal["all"], Literal["ch_types"], Iterable["str"]
-] = "ch_types"
+# analyze_channels: Union[
+#     Literal["all"], Literal["ch_types"], Iterable["str"]
+# ] = "ch_types"
+analyze_channels = ['FCz']
 """
 The names of the channels to analyze during ERP/ERF and time-frequency analysis
 steps. For certain paradigms, e.g. EEG ERP research, it is common to constrain
@@ -778,19 +781,19 @@ End time of the interpolation window in seconds.
 # --------------------------------
 # done in 02-frequency_filter.py
 
-l_freq: Optional[float] = None
+l_freq: Optional[float] = 0.1
 """
 The low-frequency cut-off in the highpass filtering step.
 Keep it `None` if no highpass filtering should be applied.
 """
 
-h_freq: Optional[float] = 40.0
+h_freq: Optional[float] = 50.0
 """
 The high-frequency cut-off in the lowpass filtering step.
 Keep it `None` if no lowpass filtering should be applied.
 """
 
-notch_freq: Optional[Union[float, Iterable[float]]] = None
+notch_freq: Optional[Union[float, Iterable[float]]] = 50
 """
 Notch filter frequency. More than one frequency can be supplied, e.g. to remove
 harmonics. Keep it `None` if no notch filter should be applied.
@@ -980,7 +983,12 @@ unknown metadata column, a warning will be emitted and all epochs will be kept.
     ```
 """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = None
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2',
+                                                              'Stimulus/S  6', 
+                                                              'Stimulus/S  7',
+                                                              'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
+                                                              'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
+                                                              'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
 """
 The time-locked events based on which to create evoked responses.
 This can either be name of the experimental condition as specified in the
@@ -1023,7 +1031,7 @@ The beginning of an epoch, relative to the respective event, in seconds.
     ```
 """
 
-epochs_tmax: float = 0.5
+epochs_tmax: float = 0.6
 """
 The end of an epoch, relative to the respective event, in seconds.
 ???+ example "Example"
@@ -1059,7 +1067,7 @@ if `None`, no baseline correction is applied.
     ```
 """
 
-contrasts: Iterable[Union[Tuple[str, str], ArbitraryContrast]] = []
+contrasts: Iterable[Union[Tuple[str, str], ArbitraryContrast]] = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
 """
 The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 can either be tuples or dictionaries (or a mix of both). Each element in the
@@ -1126,7 +1134,7 @@ epoched, and therefore the conditions should either match or be subsets of
 #
 # Currently you cannot use both.
 
-spatial_filter: Optional[Literal["ssp", "ica"]] = None
+spatial_filter: Optional[Literal["ssp", "ica"]] = 'ica'
 """
 Whether to use a spatial filter to detect and remove artifacts. The BIDS
 Pipeline offers the use of signal-space projection (SSP) and independent
@@ -1367,7 +1375,7 @@ that more ICs will be identified as EOG-related. If too low, the
 false-alarm rate increases dramatically.
 """
 
-ica_use_icalabel: bool = False
+ica_use_icalabel: bool = True
 """
 Whether to use MNE-ICALabel to automatically label ICA components. Only available for
 EEG data.
