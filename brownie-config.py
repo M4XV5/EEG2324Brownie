@@ -152,7 +152,7 @@ task: str = "casinos"
 # plotting.
 # """
 
-subjects = 'all' # analysing only subject 27 for the initial test run
+subjects = ['27','28','29'] # analysing only subject 27 for the initial test run
 # """
 # Subjects to analyze. If `'all'`, include all subjects. To only
 # include a subset of subjects, pass a list of their identifiers. Even
@@ -194,7 +194,7 @@ subjects = 'all' # analysing only subject 27 for the initial test run
 # automatically.
 # """
 
-process_rest = True # assuming resting state for initial testing
+process_rest = False # assuming resting state for initial testing
 # """
 # Whether to apply the same pre-processing steps to the resting-state data as
 # to the experimental data (up until including frequency filtering). This
@@ -321,7 +321,8 @@ data_type = 'eeg'
 #     ```
 # """
 
-eeg_reference = ['TP9', 'TP10']
+# eeg_reference = ['TP9', 'TP10']
+eeg_reference = 'average'
 # """
 # The EEG reference to use. If `average`, will use the average reference,
 # i.e. the average across all channels. If a string, must be the name of a single
@@ -406,7 +407,7 @@ eeg_reference = ['TP9', 'TP10']
 #     analyze_channels = ['Pz']
 #     ```
 # """
-# analyze_channels = ['FCz']
+analyze_channels = ['FCz']
 
 
 # reader_extra_params: dict = {}
@@ -1379,9 +1380,9 @@ ica_n_components: Optional[Union[float, int]] = 0.95
 # Rejection based on peak-to-peak amplitude
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# reject: Optional[
-#     Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
-# ] = None
+reject: Optional[
+    Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
+] = None
 # """
 # Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
 # epochs with strong transient artifacts.
