@@ -73,22 +73,22 @@ Raises an exception if the BIDS root has not been specified.
 #     and want to run the source analysis steps.
 # """
 
-# interactive: bool = False
-# """
-# If True, the steps will provide some interactive elements, such as
-# figures. If running the steps from a notebook or Spyder,
-# run `%matplotlib qt` in the command line to open the figures in a separate
-# window.
+interactive: bool = True
+"""
+If True, the steps will provide some interactive elements, such as
+figures. If running the steps from a notebook or Spyder,
+run `%matplotlib qt` in the command line to open the figures in a separate
+window.
 
-# !!! info
-#     Enabling interactive mode deactivates parallel processing.
-# """
+!!! info
+    Enabling interactive mode deactivates parallel processing.
+"""
 
-# sessions: Union[List, Literal["all"]] = "all"
-# """
-# The sessions to process. If `'all'`, will process all sessions found in the
-# BIDS dataset.
-# """
+sessions: Union[List, Literal["all"]] = "all"
+"""
+The sessions to process. If `'all'`, will process all sessions found in the
+BIDS dataset.
+"""
 
 task: str = "casinos"
 """
@@ -1334,7 +1334,7 @@ it converges quicker than the other algorithms; but e.g. for FastICA, this
 limit may be too low to achieve convergence.
 """
 
-ica_n_components: Optional[Union[float, int]] = 20
+ica_n_components: Optional[Union[float, int]] = 0.8
 """
 MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
 on the data (trying to exclude zero-valued components in rank-deficient
