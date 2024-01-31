@@ -24,6 +24,8 @@ data_type = 'eeg'
 
 eeg_reference = ['TP9', 'TP10'] #rereference to the average of the mastoid signals
 
+eeg_template_montage = 'standard_1020'
+
 # drop_channels: Iterable[str] = []
 
 l_freq = 0.1
