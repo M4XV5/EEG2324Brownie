@@ -253,40 +253,40 @@ If `None`, we will assume that the data type matches the channel type.
     ```
 """
 
-# eog_channels: Optional[Iterable[str]] = None
-# """
-# Specify EOG channels to use, or create virtual EOG channels.
+eog_channels: Optional[Iterable[str]] = ['Fp1', 'Fp2']
+"""
+Specify EOG channels to use, or create virtual EOG channels.
 
-# Allows the specification of custom channel names that shall be used as
-# (virtual) EOG channels. For example, say you recorded EEG **without** dedicated
-# EOG electrodes, but with some EEG electrodes placed close to the eyes, e.g.
-# Fp1 and Fp2. These channels can be expected to have captured large quantities
-# of ocular activity, and you might want to use them as "virtual" EOG channels,
-# while also including them in the EEG analysis. By default, MNE won't know that
-# these channels are suitable for recovering EOG, and hence won't be able to
-# perform tasks like automated blink removal, unless a "true" EOG sensor is
-# present in the data as well. Specifying channel names here allows MNE to find
-# the respective EOG signals based on these channels.
+Allows the specification of custom channel names that shall be used as
+(virtual) EOG channels. For example, say you recorded EEG **without** dedicated
+EOG electrodes, but with some EEG electrodes placed close to the eyes, e.g.
+Fp1 and Fp2. These channels can be expected to have captured large quantities
+of ocular activity, and you might want to use them as "virtual" EOG channels,
+while also including them in the EEG analysis. By default, MNE won't know that
+these channels are suitable for recovering EOG, and hence won't be able to
+perform tasks like automated blink removal, unless a "true" EOG sensor is
+present in the data as well. Specifying channel names here allows MNE to find
+the respective EOG signals based on these channels.
 
-# You can specify one or multiple channel names. Each will be treated as if it
-# were a dedicated EOG channel, without excluding it from any other analyses.
+You can specify one or multiple channel names. Each will be treated as if it
+were a dedicated EOG channel, without excluding it from any other analyses.
 
-# If `None`, only actual EOG channels will be used for EOG recovery.
+If `None`, only actual EOG channels will be used for EOG recovery.
 
-# If there are multiple actual EOG channels in your data, and you only specify
-# a subset of them here, only this subset will be used during processing.
+If there are multiple actual EOG channels in your data, and you only specify
+a subset of them here, only this subset will be used during processing.
 
-# ???+ example "Example"
-#     Treat `Fp1` as virtual EOG channel:
-#     ```python
-#     eog_channels = ['Fp1']
-#     ```
+???+ example "Example"
+    Treat `Fp1` as virtual EOG channel:
+    ```python
+    eog_channels = ['Fp1']
+    ```
 
-#     Treat `Fp1` and `Fp2` as virtual EOG channels:
-#     ```python
-#     eog_channels = ['Fp1', 'Fp2']
-#     ```
-# """
+    Treat `Fp1` and `Fp2` as virtual EOG channels:
+    ```python
+    eog_channels = ['Fp1', 'Fp2']
+    ```
+"""
 
 # eeg_bipolar_channels: Optional[Dict[str, Tuple[str, str]]] = None
 # """
@@ -344,33 +344,33 @@ channel. To use multiple channels as reference, set to a list of channel names.
     ```
 """
 
-# eeg_template_montage: Optional[Union[str, DigMontageType]] = None
-# """
-# In situations where you wish to process EEG data and no individual
-# digitization points (measured channel locations) are available, you can apply
-# a "template" montage. This means we will assume the EEG cap was placed
-# either according to an international system like 10/20, or as suggested by
-# the cap manufacturers in their respective manual.
+eeg_template_montage: Optional[Union[str, DigMontageType]] = 'standard_1020'
+"""
+In situations where you wish to process EEG data and no individual
+digitization points (measured channel locations) are available, you can apply
+a "template" montage. This means we will assume the EEG cap was placed
+either according to an international system like 10/20, or as suggested by
+the cap manufacturers in their respective manual.
 
-# Please be aware that the actual cap placement most likely deviated somewhat
-# from the template, and, therefore, source reconstruction may be impaired.
+Please be aware that the actual cap placement most likely deviated somewhat
+from the template, and, therefore, source reconstruction may be impaired.
 
-# If `None`, do not apply a template montage. If a string, must be the
-# name of a built-in template montage in MNE-Python.
-# You can find an overview of supported template montages at
-# https://mne.tools/stable/generated/mne.channels.make_standard_montage.html
+If `None`, do not apply a template montage. If a string, must be the
+name of a built-in template montage in MNE-Python.
+You can find an overview of supported template montages at
+https://mne.tools/stable/generated/mne.channels.make_standard_montage.html
 
-# ???+ example "Example"
-#     Do not apply template montage:
-#     ```python
-#     eeg_template_montage = None
-#     ```
+???+ example "Example"
+    Do not apply template montage:
+    ```python
+    eeg_template_montage = None
+    ```
 
-#     Apply 64-channel Biosemi 10/20 template montage:
-#     ```python
-#     eeg_template_montage = 'biosemi64'
-#     ```
-# """
+    Apply 64-channel Biosemi 10/20 template montage:
+    ```python
+    eeg_template_montage = 'biosemi64'
+    ```
+"""
 
 # drop_channels: Iterable[str] = []
 # """
@@ -1300,11 +1300,11 @@ negatively affect ICA performance.
 # algorithm (but may converge in less time).
 # """
 
-# ica_l_freq: Optional[float] = 1.0
-# """
-# The cutoff frequency of the high-pass filter to apply before running ICA.
-# Using a relatively high cutoff like 1 Hz will remove slow drifts from the
-# data, yielding improved ICA results. Must be set to 1 Hz or above.
+ica_l_freq: Optional[float] = 1.0
+"""
+The cutoff frequency of the high-pass filter to apply before running ICA.
+Using a relatively high cutoff like 1 Hz will remove slow drifts from the
+data, yielding improved ICA results. Must be set to 1 Hz or above.
 
 # Set to `None` to not apply an additional high-pass filter.
 
@@ -1321,42 +1321,42 @@ negatively affect ICA performance.
 #     us so we can discuss.
 # """
 
-# ica_max_iterations: int = 500
-# """
-# Maximum number of iterations to decompose the data into independent
-# components. A low number means to finish earlier, but the consequence is
-# that the algorithm may not have finished converging. To ensure
-# convergence, pick a high number here (e.g. 3000); yet the algorithm will
-# terminate as soon as it determines that is has successfully converged, and
-# not necessarily exhaust the maximum number of iterations. Note that the
-# default of 200 seems to be sufficient for Picard in many datasets, because
-# it converges quicker than the other algorithms; but e.g. for FastICA, this
-# limit may be too low to achieve convergence.
-# """
+ica_max_iterations: int = 500
+"""
+Maximum number of iterations to decompose the data into independent
+components. A low number means to finish earlier, but the consequence is
+that the algorithm may not have finished converging. To ensure
+convergence, pick a high number here (e.g. 3000); yet the algorithm will
+terminate as soon as it determines that is has successfully converged, and
+not necessarily exhaust the maximum number of iterations. Note that the
+default of 200 seems to be sufficient for Picard in many datasets, because
+it converges quicker than the other algorithms; but e.g. for FastICA, this
+limit may be too low to achieve convergence.
+"""
 
-# ica_n_components: Optional[Union[float, int]] = 0.8
-# """
-# MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
-# on the data (trying to exclude zero-valued components in rank-deficient
-# data); and in the second step, the principal components are passed
-# to the actual ICA. You can select how many of the total principal
-# components to pass to ICA – it can be all or just a subset. This determines
-# how many independent components to fit, and can be controlled via this
-# setting.
+ica_n_components: Optional[Union[float, int]] = 20
+"""
+MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
+on the data (trying to exclude zero-valued components in rank-deficient
+data); and in the second step, the principal components are passed
+to the actual ICA. You can select how many of the total principal
+components to pass to ICA – it can be all or just a subset. This determines
+how many independent components to fit, and can be controlled via this
+setting.
 
-# If int, specifies the number of principal components that are passed to the
-# ICA algorithm, which will be the number of independent components to
-# fit. It must not be greater than the rank of your data (which is typically
-# the number of channels, but may be less in some cases).
+If int, specifies the number of principal components that are passed to the
+ICA algorithm, which will be the number of independent components to
+fit. It must not be greater than the rank of your data (which is typically
+the number of channels, but may be less in some cases).
 
-# If float between 0 and 1, all principal components with cumulative
-# explained variance less than the value specified here will be passed to
-# ICA.
+If float between 0 and 1, all principal components with cumulative
+explained variance less than the value specified here will be passed to
+ICA.
 
-# If `None`, **all** principal components will be used.
+If `None`, **all** principal components will be used.
 
-# This setting may drastically alter the time required to compute ICA.
-# """
+This setting may drastically alter the time required to compute ICA.
+"""
 
 # ica_decim: Optional[int] = None
 # """
@@ -1384,65 +1384,65 @@ negatively affect ICA performance.
 reject: Optional[
     Union[Dict[str, float], Literal["autoreject_global", "autoreject_local"]]
 ] = 'autoreject_local'
-# """
-# Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
-# epochs with strong transient artifacts.
+"""
+Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
+epochs with strong transient artifacts.
 
-# !!! info
-#       The rejection is performed **after** SSP or ICA, if any of those methods
-#       is used. To reject epochs **before** fitting ICA, see the
-#       [`ica_reject`][mne_bids_pipeline._config.ica_reject] setting.
+!!! info
+      The rejection is performed **after** SSP or ICA, if any of those methods
+      is used. To reject epochs **before** fitting ICA, see the
+      [`ica_reject`][mne_bids_pipeline._config.ica_reject] setting.
 
-# If `None` (default), do not apply artifact rejection.
+If `None` (default), do not apply artifact rejection.
 
-# If a dictionary, manually specify rejection thresholds (see examples). 
-# The thresholds provided here must be at least as stringent as those in
-# [`ica_reject`][mne_bids_pipeline._config.ica_reject] if using ICA. In case of
-# `'autoreject_global'`, thresholds for any channel that do not meet this
-# requirement will be automatically replaced with those used in `ica_reject`.
+If a dictionary, manually specify rejection thresholds (see examples). 
+The thresholds provided here must be at least as stringent as those in
+[`ica_reject`][mne_bids_pipeline._config.ica_reject] if using ICA. In case of
+`'autoreject_global'`, thresholds for any channel that do not meet this
+requirement will be automatically replaced with those used in `ica_reject`.
 
-# If `"autoreject_global"`, use [`autoreject`](https://autoreject.github.io) to find
-# suitable "global" rejection thresholds for each channel type, i.e., `autoreject`
-# will generate a dictionary with (hopefully!) optimal thresholds for each
-# channel type.
+If `"autoreject_global"`, use [`autoreject`](https://autoreject.github.io) to find
+suitable "global" rejection thresholds for each channel type, i.e., `autoreject`
+will generate a dictionary with (hopefully!) optimal thresholds for each
+channel type.
 
-# If `"autoreject_local"`, use "local" `autoreject` to detect (and potentially repair) bad
-# channels in each epoch. Use [`autoreject_n_interpolate`][mne_bids_pipeline._config.autoreject_n_interpolate]
-# to control how many channels are allowed to be bad before an epoch gets dropped.
+If `"autoreject_local"`, use "local" `autoreject` to detect (and potentially repair) bad
+channels in each epoch. Use [`autoreject_n_interpolate`][mne_bids_pipeline._config.autoreject_n_interpolate]
+to control how many channels are allowed to be bad before an epoch gets dropped.
 
-# ???+ example "Example"
-#     ```python
-#     reject = {"grad": 4000e-13, 'mag': 4e-12, 'eog': 150e-6}
-#     reject = {"eeg": 100e-6, "eog": 250e-6}
-#     reject = None  # no rejection based on PTP amplitude
-#     reject = "autoreject_global"  # find global (per channel type) PTP thresholds
-#     reject = "autoreject_local"  # find local (per channel) thresholds and repair epochs
-#     ```
-# """
+???+ example "Example"
+    ```python
+    reject = {"grad": 4000e-13, 'mag': 4e-12, 'eog': 150e-6}
+    reject = {"eeg": 100e-6, "eog": 250e-6}
+    reject = None  # no rejection based on PTP amplitude
+    reject = "autoreject_global"  # find global (per channel type) PTP thresholds
+    reject = "autoreject_local"  # find local (per channel) thresholds and repair epochs
+    ```
+"""
 
-# reject_tmin: Optional[float] = None
-# """
-# Start of the time window used to reject epochs. If `None`, the window will
-# start with the first time point. Has no effect if
-# [`reject`][mne_bids_pipeline._config.reject] has been set to `"autoreject_local"`.
+reject_tmin: Optional[float] = None
+"""
+Start of the time window used to reject epochs. If `None`, the window will
+start with the first time point. Has no effect if
+[`reject`][mne_bids_pipeline._config.reject] has been set to `"autoreject_local"`.
 
-# ???+ example "Example"
-#     ```python
-#     reject_tmin = -0.1  # 100 ms before event onset.
-#     ```
-# """
+???+ example "Example"
+    ```python
+    reject_tmin = -0.1  # 100 ms before event onset.
+    ```
+"""
 
-# reject_tmax: Optional[float] = None
-# """
-# End of the time window used to reject epochs. If `None`, the window will end
-# with the last time point. Has no effect if
-# [`reject`][mne_bids_pipeline._config.reject] has been set to `"autoreject_local"`.
+reject_tmax: Optional[float] = None
+"""
+End of the time window used to reject epochs. If `None`, the window will end
+with the last time point. Has no effect if
+[`reject`][mne_bids_pipeline._config.reject] has been set to `"autoreject_local"`.
 
-# ???+ example "Example"
-#     ```python
-#     reject_tmax = 0.3  # 300 ms after event onset.
-#     ```
-# """
+???+ example "Example"
+    ```python
+    reject_tmax = 0.3  # 300 ms after event onset.
+    ```
+"""
 
 # autoreject_n_interpolate: FloatArrayLike = [4, 8, 16]
 # """
