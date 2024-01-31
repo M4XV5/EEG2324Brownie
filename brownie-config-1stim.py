@@ -73,7 +73,7 @@ Raises an exception if the BIDS root has not been specified.
 #     and want to run the source analysis steps.
 # """
 
-interactive: bool = True
+interactive: bool = False
 """
 If True, the steps will provide some interactive elements, such as
 figures. If running the steps from a notebook or Spyder,
@@ -152,7 +152,7 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects: Union[Iterable[str], Literal["all"]] = ['27']
+subjects: Union[Iterable[str], Literal["all"]] = ['27','28','29']
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
 include a subset of subjects, pass a list of their identifiers. Even
@@ -322,6 +322,7 @@ a subset of them here, only this subset will be used during processing.
 # """
 
 eeg_reference: Union[Literal["average"], str, Iterable["str"]] = ['TP9', 'TP10']
+# eeg_reference = ['TP9', 'TP10']
 """
 The EEG reference to use. If `average`, will use the average reference,
 i.e. the average across all channels. If a string, must be the name of a single
@@ -388,9 +389,9 @@ https://mne.tools/stable/generated/mne.channels.make_standard_montage.html
 # analyze_channels: Union[
 #     Literal["all"], Literal["ch_types"], Iterable["str"]
 # ] = "ch_types"
-analyze_channels: Union[
-    Literal["all"], Literal["ch_types"], Iterable["str"]
-] = ['FCz']
+# analyze_channels: Union[
+#     Literal["all"], Literal["ch_types"], Iterable["str"]
+# ] = ['FCz']
 """
 The names of the channels to analyze during ERP/ERF and time-frequency analysis
 steps. For certain paradigms, e.g. EEG ERP research, it is common to constrain
@@ -793,7 +794,7 @@ The high-frequency cut-off in the lowpass filtering step.
 Keep it `None` if no lowpass filtering should be applied.
 """
 
-notch_freq: Optional[Union[float, Iterable[float]]] = 50
+notch_freq: Optional[Union[float, Iterable[float]]] = 50.0
 """
 Notch filter frequency. More than one frequency can be supplied, e.g. to remove
 harmonics. Keep it `None` if no notch filter should be applied.
@@ -983,7 +984,7 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S 37']
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2','Stimulus/S  6','Stimulus/S  7','Stimulus/S 32','Stimulus/S 36','Stimulus/S 37']
                                                             #   ,
                                                             #   'Stimulus/S  6', 
                                                             #   'Stimulus/S  7',
@@ -1334,7 +1335,7 @@ it converges quicker than the other algorithms; but e.g. for FastICA, this
 limit may be too low to achieve convergence.
 """
 
-ica_n_components: Optional[Union[float, int]] = 0.8
+ica_n_components: Optional[Union[float, int]] = 0.95
 """
 MNE conducts ICA as a sort of a two-step procedure: First, a PCA is run
 on the data (trying to exclude zero-valued components in rank-deficient
