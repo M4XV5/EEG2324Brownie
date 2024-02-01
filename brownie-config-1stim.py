@@ -984,7 +984,7 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S  2','Stimulus/S  6','Stimulus/S  7','Stimulus/S 32','Stimulus/S 36','Stimulus/S 37']
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S 37']
                                                             #   ,
                                                             #   'Stimulus/S  6', 
                                                             #   'Stimulus/S  7',
