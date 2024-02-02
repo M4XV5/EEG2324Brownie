@@ -1,0 +1,52 @@
+{
+  "trial_type": {
+    "Description": "BrainVision event number and type (string)"
+  },
+  "value": {
+    "Description": "Event value (string)",
+    "Levels": {
+      "S1": "Onset of fixation cross at start of trial (low-task, low-cue)",
+      "S11": "Onset of fixation cross at start of trial (mid-task, low-cue)",
+      "S21": "Onset of fixation cross at start of trial (mid-task, high-cue)",
+      "S31": "Onset of fixation cross at start of trial (high-task, high-cue)",
+      "S2": "Onset of cue (low-task, low-cue)",
+      "S12": "Onset of cue (mid-task, low-cue)",
+      "S22": "Onset of cue (mid-task, high-cue)",
+      "S32": "Onset of cue (high-task, high-cue)",
+      "S3": "Beep (low-task, low-cue)",
+      "S13": "Beep (mid-task, low-cue)",
+      "S23": "Beep (mid-task, high-cue)",
+      "S33": "Beep (high-task, high-cue)",
+      "S4": "Valid left response (low-task, low-cue)",
+      "S14": "Valid left response (mid-task, low-cue)",
+      "S24": "Valid left response (mid-task, high-cue)",
+      "S34": "Valid left response(high-task, high-cue)",
+      "S5": "Valid right response (low-task, low-cue)",
+      "S15": "Valid right response (mid-task, low-cue)",
+      "S25": "Valid right response (mid-task, high-cue)",
+      "S35": "Valid right response (high-task, high-cue)",
+      "S6": "Onset of win feedback (low-task, low-cue)",
+      "S16": "Onset of win feedback (mid-task, low-cue)",
+      "S26": "Onset of win feedback (mid-task, high-cue)",
+      "S36": "Onset of win feedback  (high-task, high-cue)",
+      "S7": "Onset of loss feedback (low-task, low-cue)",
+      "S17": "Onset of loss feedback (mid-task, low-cue)",
+      "S27": "Onset of loss feedback (mid-task, high-cue)",
+      "S37": "Onset of loss feedback (high-task, high-cue)"
+    }
+  },
+  "onset": {
+    "Description": "Event onset",
+    "Units": "milisecond"
+  },
+  "duration": {
+    "Description": "Event duration",
+    "Units": "milisecond"
+  },
+  "channel": {
+    "Description": "Channel number",
+    "Levels": {
+      "x0": "All channels"
+    }
+  }
+}
