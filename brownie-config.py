@@ -15,9 +15,8 @@ bids_root = "./Dataset/ds004147"
 interactive = False
 task: str = "casinos"
 
-subjects = ['all']
-# our analysis did not return any subjects that satisfied the exclusion criteria
-# exclude_subjects: Iterable[str] = [] 
+subjects = ['27','28','29'] #['all']
+# no subjects excluded - our analysis did not return any subjects that satisfied the exclusion criteria
 
 ch_types = ['eeg']
 data_type = 'eeg'
@@ -107,8 +106,8 @@ conditions = ['S  2', 'S  6', 'S  7',
 ]
 
 # epochs relative to the stimulus (/ # beep) events
-epochs_tmin: float = -0.2 # -1.2
-epochs_tmax: float = 0.6 # -0.6
+epochs_tmin: float = -0.2
+epochs_tmax: float = 0.6
 
 task_is_rest: bool = False
 
@@ -187,7 +186,7 @@ contrasts = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
 #     ```
 # """
 
-reject = {"eeg":150e-6}
+reject = 'autoreject_global' #{"eeg":150e-6}
 # """
 # Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
 # epochs with strong transient artifacts.
