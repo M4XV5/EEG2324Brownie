@@ -152,7 +152,7 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects: Union[Iterable[str], Literal["all"]] = ['27','28','29']
+subjects: Union[Iterable[str], Literal["all"]] = ['29']
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
 include a subset of subjects, pass a list of their identifiers. Even
@@ -1372,7 +1372,7 @@ This setting may drastically alter the time required to compute ICA.
 # The threshold parameter passed to `find_bads_ecg` method.
 # """
 
-# ica_eog_threshold: float = 3.0
+ica_eog_threshold: float = 1.5
 # """
 # The threshold to use during automated EOG classification. Lower values mean
 # that more ICs will be identified as EOG-related. If too low, the
