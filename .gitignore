@@ -152,3 +152,5 @@ cython_debug/
 #.idea/
 Dataset/ds004147_filtered/
 Dataset/ds004147/
+.virtual_documents
+.vscode
