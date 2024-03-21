@@ -152,7 +152,7 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects: Union[Iterable[str], Literal["all"]] = ['29']
+subjects: Union[Iterable[str], Literal["all"]] = 'all'
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
 include a subset of subjects, pass a list of their identifiers. Even
@@ -386,12 +386,13 @@ https://mne.tools/stable/generated/mne.channels.make_standard_montage.html
 #     ```
 # """
 
+analyze_channels: Union[
+    Literal["all"], Literal["ch_types"], Iterable["str"]
+] = "ch_types"
 # analyze_channels: Union[
 #     Literal["all"], Literal["ch_types"], Iterable["str"]
-# ] = "ch_types"
-# analyze_channels: Union[
-#     Literal["all"], Literal["ch_types"], Iterable["str"]
-# ] = ['FCz']
+# ] = ['FCz','FC1', 'FC2']
+# analyze_channels = ['FCz']
 """
 The names of the channels to analyze during ERP/ERF and time-frequency analysis
 steps. For certain paradigms, e.g. EEG ERP research, it is common to constrain
@@ -984,13 +985,18 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S 37']
-                                                            #   ,
-                                                            #   'Stimulus/S  6', 
-                                                            #   'Stimulus/S  7',
-                                                            #   'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
-                                                            #   'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
-                                                            #   'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
+# conditions: Optional[Union[Iterable[str], Dict[str, str]]] = ['Stimulus/S 37']
+#                                                             #   ,
+#                                                             #   'Stimulus/S  6', 
+#                                                             #   'Stimulus/S  7',
+#                                                             #   'Stimulus/S 12', 'Stimulus/S 16', 'Stimulus/S 17', 
+#                                                             #   'Stimulus/S 22', 'Stimulus/S 26', 'Stimulus/S 27', 
+#                                                             #   'Stimulus/S 32', 'Stimulus/S 36', 'Stimulus/S 37']
+conditions: Optional[Union[Iterable[str], Dict[str, str]]] = [
+                                                              'Stimulus/S  6','Stimulus/S  7'
+                                                              ,'Stimulus/S 16', 'Stimulus/S 17'
+                                                              , 'Stimulus/S 26', 'Stimulus/S 27'
+                                                              , 'Stimulus/S 36', 'Stimulus/S 37']
 """
 The time-locked events based on which to create evoked responses.
 This can either be name of the experimental condition as specified in the
