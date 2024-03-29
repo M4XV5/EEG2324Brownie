@@ -12,6 +12,8 @@ from mne_bids_pipeline.typing import (
     DigMontageType,
 )
 
+# True = change events/epochs to ICA training
+ica_train_step: bool = False #False by default
 
 ###############################################################################
 # Config parameters
@@ -29,7 +31,7 @@ saving the analysis results.
 """
 
 
-bids_root = "./Dataset/ds004147"
+bids_root = "./Dataset/ds004147-filtered"
 """
 Specify the BIDS root directory. Pass an empty string or ```None` to use
 the value specified in the `BIDS_ROOT` environment variable instead.
@@ -153,7 +155,7 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects = ['27','28','29'] #['all']
+subjects = 'all' # ['28', '29'] # 
 # no subjects excluded - our analysis did not return any subjects that satisfied the exclusion criteria
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
@@ -174,7 +176,7 @@ section).
     ```
 """
 
-# exclude_subjects: Iterable[str] = []
+# exclude_subjects: Iterable[str] = None
 # """
 # Specify subjects to exclude from analysis. The MEG empty-room mock-subject
 # is automatically excluded from regular analysis.
@@ -390,9 +392,9 @@ https://mne.tools/stable/generated/mne.channels.make_standard_montage.html
 # analyze_channels: Union[
 #     Literal["all"], Literal["ch_types"], Iterable["str"]
 # ] = "ch_types"
-# analyze_channels: Union[
-#     Literal["all"], Literal["ch_types"], Iterable["str"]
-# ] = ['FCz']
+analyze_channels: Union[
+    Literal["all"], Literal["ch_types"], Iterable["str"]
+] = ['all']#['FCz','Cz']
 """
 The names of the channels to analyze during ERP/ERF and time-frequency analysis
 steps. For certain paradigms, e.g. EEG ERP research, it is common to constrain
@@ -876,7 +878,22 @@ If `None`, then no resampling will be done.
 # RENAME EXPERIMENTAL EVENTS
 # --------------------------
 
-# rename_events: dict = dict()
+rename_events: dict = {
+    'Stimulus/S  6': 'Win LL', 
+    'Stimulus/S  7': 'Loss LL',
+    'Stimulus/S 16': 'Win ML', 
+    'Stimulus/S 17': 'Loss ML',
+    'Stimulus/S 26': 'Win MH', 
+    'Stimulus/S 27': 'Loss MH',
+    'Stimulus/S 36': 'Win HH', 
+    'Stimulus/S 37': 'Loss HH',
+    'Stimulus/S  2':'Cue LL',
+    'Stimulus/S 12':'Cue ML',
+    'Stimulus/S 22':'Cue MH',
+    'Stimulus/S 32':'Cue HH',
+}
+
+
 # """
 # A dictionary specifying which events in the BIDS dataset to rename upon
 # loading, and before processing begins.
@@ -985,11 +1002,25 @@ If `None`, then no resampling will be done.
 #     ```
 # """  # noqa: E501
 
-conditions = ['S  2', 'S  6', 'S  7',
-'S 12', 'S 16', 'S 17',
-'S 22', 'S 26', 'S 27',
-'S 32', 'S 36', 'S 37'
+conditions = [
+    'Win LL',
+    'Loss LL',
+    'Win ML',
+    'Loss ML',
+    'Win MH',
+    'Loss MH',
+    'Win HH',
+    'Loss HH'
 ]
+
+if ica_train_step:
+    conditions = [
+        'Cue LL',
+        'Cue ML',
+        'Cue MH',
+        'Cue HH'
+        ]
+
 """
 The time-locked events based on which to create evoked responses.
 This can either be name of the experimental condition as specified in the
@@ -1024,6 +1055,8 @@ for more information.
 
 # epochs relative to the stimulus events
 epochs_tmin: float = -0.2
+if ica_train_step:
+    epochs_tmin = 0
 """
 The beginning of an epoch, relative to the respective event, in seconds.
 
@@ -1034,6 +1067,8 @@ The beginning of an epoch, relative to the respective event, in seconds.
 """
 
 epochs_tmax: float = 0.6
+if ica_train_step:
+    epochs_tmax = 3
 """
 The end of an epoch, relative to the respective event, in seconds.
 ???+ example "Example"
@@ -1069,7 +1104,7 @@ if `None`, no baseline correction is applied.
 #     ```
 # """
 
-contrasts = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
+contrasts = [('Win LL','Loss LL'),('Win ML','Loss ML'),('Win MH','Loss MH'),('Win HH','Loss HH')]
 # """
 # The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 # can either be tuples or dictionaries (or a mix of both). Each element in the
@@ -1372,7 +1407,7 @@ This setting may drastically alter the time required to compute ICA.
 # The threshold parameter passed to `find_bads_ecg` method.
 # """
 
-# ica_eog_threshold: float = 3.0
+ica_eog_threshold: float = 1.0
 # """
 # The threshold to use during automated EOG classification. Lower values mean
 # that more ICs will be identified as EOG-related. If too low, the
@@ -1382,7 +1417,7 @@ This setting may drastically alter the time required to compute ICA.
 # Rejection based on peak-to-peak amplitude
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-reject = 'autoreject_global' #{"eeg":150e-6}
+reject = {"eeg":150e-6} #'autoreject_global' #   
 """
 Peak-to-peak amplitude limits to mark epochs as bad. This allows you to remove
 epochs with strong transient artifacts.
@@ -1464,7 +1499,7 @@ with the last time point. Has no effect if
 # DECODING
 # --------
 
-# decode: bool = True
+decode: bool = False
 # """
 # Whether to perform decoding (MVPA) on the specified
 # [`contrasts`][mne_bids_pipeline._config.contrasts]. Classifiers will be trained
@@ -2108,7 +2143,7 @@ with the last time point. Has no effect if
 # Execution
 # ---------
 
-# n_jobs: int = 1
+n_jobs: int = 3
 # """
 # Specifies how many subjects you want to process in parallel. If `1`, disables
 # parallel processing.
@@ -2216,3 +2251,9 @@ with the last time point. Has no effect if
 # how to handle *possibly* or *likely* incorrect entries, such as likely
 # misspellings (e.g., providing `session` instead of `sessions`).
 # """
+# import numpy as np
+# time_frequency_conditions = ["S  2"]
+# time_frequency_freq_min = 0.1
+# time_frequency_freq_max = 50.0
+# time_frequency_cycles = np.arange(time_frequency_freq_min, time_frequency_freq_max) / 4
+# time_frequency_subtract_evoked = True
