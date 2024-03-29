@@ -12,7 +12,8 @@ from mne_bids_pipeline.typing import (
     DigMontageType,
 )
 
-ica_train_step: bool = True #True by default
+# True = change events/epochs to ICA training
+ica_train_step: bool = False #False by default
 
 ###############################################################################
 # Config parameters
@@ -878,15 +879,21 @@ If `None`, then no resampling will be done.
 # --------------------------
 
 rename_events: dict = {
-    'S  6': 'Win LL', 
-    'S  7': 'Loss LL',
-    'S 16': 'Win ML', 
-    'S 17': 'Loss ML',
-    'S 26': 'Win MH', 
-    'S 27': 'Loss MH',
-    'S 36': 'Win HH', 
-    'S 37': 'Loss HH'
+    'Stimulus/S  6': 'Win LL', 
+    'Stimulus/S  7': 'Loss LL',
+    'Stimulus/S 16': 'Win ML', 
+    'Stimulus/S 17': 'Loss ML',
+    'Stimulus/S 26': 'Win MH', 
+    'Stimulus/S 27': 'Loss MH',
+    'Stimulus/S 36': 'Win HH', 
+    'Stimulus/S 37': 'Loss HH',
+    'Stimulus/S  2':'Cue LL',
+    'Stimulus/S 12':'Cue ML',
+    'Stimulus/S 22':'Cue MH',
+    'Stimulus/S 32':'Cue HH',
 }
+
+
 # """
 # A dictionary specifying which events in the BIDS dataset to rename upon
 # loading, and before processing begins.
@@ -995,15 +1002,25 @@ rename_events: dict = {
 #     ```
 # """  # noqa: E501
 
-# conditions = ['S  2',
-# 'S 12',
-# 'S 22',
-# 'S 32',]
-conditions = ['S  6', 'S  7',
-'S 16', 'S 17',
-'S 26', 'S 27',
-'S 36', 'S 37'
+conditions = [
+    'Win LL',
+    'Loss LL',
+    'Win ML',
+    'Loss ML',
+    'Win MH',
+    'Loss MH',
+    'Win HH',
+    'Loss HH'
 ]
+
+if ica_train_step:
+    conditions = [
+        'Cue LL',
+        'Cue ML',
+        'Cue MH',
+        'Cue HH'
+        ]
+
 """
 The time-locked events based on which to create evoked responses.
 This can either be name of the experimental condition as specified in the
@@ -1087,7 +1104,7 @@ if `None`, no baseline correction is applied.
 #     ```
 # """
 
-contrasts = [('S  6','S  7'),('S 16','S 17'),('S 26','S 27'),('S 36','S 37')]
+contrasts = [('Win LL','Loss LL'),('Win ML','Loss ML'),('Win MH','Loss MH'),('Win HH','Loss HH')]
 # """
 # The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 # can either be tuples or dictionaries (or a mix of both). Each element in the
