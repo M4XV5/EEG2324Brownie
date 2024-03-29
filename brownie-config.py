@@ -12,8 +12,22 @@ from mne_bids_pipeline.typing import (
     DigMontageType,
 )
 
+#######################################
+# Custom Flags
+#--------------------------------------
+
 # True = change events/epochs to ICA training
 ica_train_step: bool = False #False by default
+print('ica train flag: ' + ica_train_step )
+
+# Renaming Stimuli toggle
+# default False = no renaming
+renaming_flag = False
+
+print('renaming flag: ' + renaming_flag)
+
+#--------------------------------------
+#######################################
 
 ###############################################################################
 # Config parameters
@@ -878,20 +892,21 @@ If `None`, then no resampling will be done.
 # RENAME EXPERIMENTAL EVENTS
 # --------------------------
 
-rename_events: dict = {
-    'Stimulus/S  6': 'Win LL', 
-    'Stimulus/S  7': 'Loss LL',
-    'Stimulus/S 16': 'Win ML', 
-    'Stimulus/S 17': 'Loss ML',
-    'Stimulus/S 26': 'Win MH', 
-    'Stimulus/S 27': 'Loss MH',
-    'Stimulus/S 36': 'Win HH', 
-    'Stimulus/S 37': 'Loss HH',
-    'Stimulus/S  2':'Cue LL',
-    'Stimulus/S 12':'Cue ML',
-    'Stimulus/S 22':'Cue MH',
-    'Stimulus/S 32':'Cue HH',
-}
+if renaming_flag:
+    rename_events: dict = {
+        'Stimulus/S  6': 'Win LL', 
+        'Stimulus/S  7': 'Loss LL',
+        'Stimulus/S 16': 'Win ML', 
+        'Stimulus/S 17': 'Loss ML',
+        'Stimulus/S 26': 'Win MH', 
+        'Stimulus/S 27': 'Loss MH',
+        'Stimulus/S 36': 'Win HH', 
+        'Stimulus/S 37': 'Loss HH',
+        'Stimulus/S  2':'Cue LL',
+        'Stimulus/S 12':'Cue ML',
+        'Stimulus/S 22':'Cue MH',
+        'Stimulus/S 32':'Cue HH',
+    }
 
 
 # """
@@ -1003,6 +1018,26 @@ rename_events: dict = {
 # """  # noqa: E501
 
 conditions = [
+    'Stimulus/S  6',
+    'Stimulus/S  7',
+    'Stimulus/S 16',
+    'Stimulus/S 17',
+    'Stimulus/S 26',
+    'Stimulus/S 27',
+    'Stimulus/S 36',
+    'Stimulus/S 37'
+]
+
+if ica_train_step:
+    conditions = [
+        'Stimulus/S  2',
+        'Stimulus/S 12',
+        'Stimulus/S 22',
+        'Stimulus/S 32'
+        ]
+    
+if renaming_flag:
+    conditions = [
     'Win LL',
     'Loss LL',
     'Win ML',
@@ -1011,15 +1046,15 @@ conditions = [
     'Loss MH',
     'Win HH',
     'Loss HH'
-]
+    ]
 
-if ica_train_step:
-    conditions = [
-        'Cue LL',
-        'Cue ML',
-        'Cue MH',
-        'Cue HH'
-        ]
+    if ica_train_step:
+        conditions = [
+            'Cue LL',
+            'Cue ML',
+            'Cue MH',
+            'Cue HH'
+            ]
 
 """
 The time-locked events based on which to create evoked responses.
@@ -1103,8 +1138,26 @@ if `None`, no baseline correction is applied.
 #     baseline = (None, 0)  # beginning of epoch until time point zero
 #     ```
 # """
+# TODO rename back
+# rename_events: dict = {
+#         'Stimulus/S  6': 'Win LL', 
+#         'Stimulus/S  7': 'Loss LL',
+#         'Stimulus/S 16': 'Win ML', 
+#         'Stimulus/S 17': 'Loss ML',
+#         'Stimulus/S 26': 'Win MH', 
+#         'Stimulus/S 27': 'Loss MH',
+#         'Stimulus/S 36': 'Win HH', 
+#         'Stimulus/S 37': 'Loss HH',
+#         'Stimulus/S  2':'Cue LL',
+#         'Stimulus/S 12':'Cue ML',
+#         'Stimulus/S 22':'Cue MH',
+#         'Stimulus/S 32':'Cue HH',
+#     }
+contrasts = [('Stimulus/S  6','Stimulus/S  7'),('Stimulus/S 16','Stimulus/S 17'),('Stimulus/S 26','Stimulus/S 27'),('Stimulus/S 36','Stimulus/S 37')]
 
-contrasts = [('Win LL','Loss LL'),('Win ML','Loss ML'),('Win MH','Loss MH'),('Win HH','Loss HH')]
+if renaming_flag:
+    contrasts = [('Win LL','Loss LL'),('Win ML','Loss ML'),('Win MH','Loss MH'),('Win HH','Loss HH')]
+
 # """
 # The conditions to contrast via a subtraction of ERPs / ERFs. The list elements
 # can either be tuples or dictionaries (or a mix of both). Each element in the
