@@ -18,13 +18,13 @@ from mne_bids_pipeline.typing import (
 
 # True = change events/epochs to ICA training
 ica_train_step: bool = False #False by default
-print('ica train flag: ' + ica_train_step )
+print('ica train flag: ', ica_train_step)
 
 # Renaming Stimuli toggle
 # default False = no renaming
 renaming_flag = False
 
-print('renaming flag: ' + renaming_flag)
+print('renaming flag: ', renaming_flag)
 
 #--------------------------------------
 #######################################
