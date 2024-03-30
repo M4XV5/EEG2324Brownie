@@ -378,7 +378,7 @@ def retrieve_data(selected_channel, filt_ds_path, raw_ds_path, output_dir, subje
             "mean_voltage": mean_voltages,
             "max_voltage": max_voltages,
         })
-    performance = pd.read_csv("performances.csv")
+    performance = pd.read_csv("data/performances.csv")
     df = pd.merge(df, performance, on="subject", how="left")
     if output_dir is not None:
         df.to_csv(output_dir, index=False)
