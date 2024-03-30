@@ -22,7 +22,7 @@ print('ica train flag: ', ica_train_step)
 
 # Renaming Stimuli toggle
 # default False = no renaming
-renaming_flag = False
+renaming_flag = True
 
 print('renaming flag: ', renaming_flag)
 
