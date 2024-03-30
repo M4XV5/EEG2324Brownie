@@ -22,8 +22,7 @@ print('ica train flag: ', ica_train_step)
 
 # Renaming Stimuli toggle
 # default False = no renaming
-renaming_flag = True
-
+renaming_flag: bool = True
 print('renaming flag: ', renaming_flag)
 
 #--------------------------------------
@@ -169,7 +168,8 @@ runs. In this case, specify the runs, or pass an empty list to disable raw PSD
 plotting.
 """
 
-subjects = 'all' # ['28', '29'] # 
+# subjects = 'all' # ['28', '29'] # 
+subjects = ['28']
 # no subjects excluded - our analysis did not return any subjects that satisfied the exclusion criteria
 """
 Subjects to analyze. If `'all'`, include all subjects. To only
@@ -854,7 +854,7 @@ harmonics. Keep it `None` if no notch filter should be applied.
 # Specifies the width of each stop band. `None` uses the MNE default.
 # """
 
-raw_resample_sfreq = 150
+raw_resample_sfreq = None
 """
 Specifies at which sampling frequency the data should be resampled.
 If `None`, then no resampling will be done.
@@ -1155,21 +1155,7 @@ if `None`, no baseline correction is applied.
 #     baseline = (None, 0)  # beginning of epoch until time point zero
 #     ```
 # """
-# TODO rename back
-# rename_events: dict = {
-#         'Stimulus/S  6': 'Win LL', 
-#         'Stimulus/S  7': 'Loss LL',
-#         'Stimulus/S 16': 'Win ML', 
-#         'Stimulus/S 17': 'Loss ML',
-#         'Stimulus/S 26': 'Win MH', 
-#         'Stimulus/S 27': 'Loss MH',
-#         'Stimulus/S 36': 'Win HH', 
-#         'Stimulus/S 37': 'Loss HH',
-#         'Stimulus/S  2':'Cue LL',
-#         'Stimulus/S 12':'Cue ML',
-#         'Stimulus/S 22':'Cue MH',
-#         'Stimulus/S 32':'Cue HH',
-#     }
+
 contrasts = [('Stimulus/S  6','Stimulus/S  7'),('Stimulus/S 16','Stimulus/S 17'),('Stimulus/S 26','Stimulus/S 27'),('Stimulus/S 36','Stimulus/S 37')]
 
 if renaming_flag:
