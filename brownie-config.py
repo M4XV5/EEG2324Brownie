@@ -17,7 +17,7 @@ from mne_bids_pipeline.typing import (
 #--------------------------------------
 
 # True = change events/epochs to ICA training
-ica_train_step: bool = False #False by default
+ica_train_step: bool = False # False by default, to be set as true just while training ICA
 print('ica train flag: ', ica_train_step)
 
 # Renaming Stimuli toggle
@@ -906,6 +906,23 @@ if renaming_flag:
         'Stimulus/S 12':'Cue ML',
         'Stimulus/S 22':'Cue MH',
         'Stimulus/S 32':'Cue HH',
+        # not directly required for analysis:
+        'Stimulus/S  1': 'Fixation LL',
+        'Stimulus/S 11': 'Fixation ML',
+        'Stimulus/S 21': 'Fixation MH',
+        'Stimulus/S 31': 'Fixation HH',
+        'Stimulus/S  3':'Beep LL',        
+        'Stimulus/S 13':'Beep ML',        
+        'Stimulus/S 23':'Beep MH',        
+        'Stimulus/S 33':'Beep HH',
+        'Stimulus/S  4': 'Valid Left LL',
+        'Stimulus/S 14': 'Valid Left ML',
+        'Stimulus/S 24': 'Valid Left MH',
+        'Stimulus/S 34': 'Valid Left HH',
+        'Stimulus/S  5':'Valid Right LL',        
+        'Stimulus/S 15':'Valid Right ML',        
+        'Stimulus/S 25':'Valid Right MH',        
+        'Stimulus/S 35':'Valid Right HH',
     }
 
 
