@@ -7,3 +7,4 @@ pandas==2.2.1
 scipy==1.12.0
 statsmodels==0.14.1
 tqdm==4.65.0
+mne_bids_pipeline==1.7.0
