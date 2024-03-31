@@ -36,12 +36,10 @@ def plot_invalid_trials_over_time_stacked(participant_data):
     plt.grid(True)
     plt.show()
 
+
 # Removing trials/participants
-def drop_learning_nonlearner_invalid_trials():
-    # HYPERPARAMS
-    n = 4
-    threshold = 0.7
-    subjects_dir = 'Dataset/ds004147-filtered'  # copy dataset an add "-filtered" suffix
+def drop_learning_nonlearner_invalid_trials(n=4, threshold=0.7, subjects_dir='Dataset/ds004147-filtered'):
+    # copy dataset an add "-filtered" suffix
     subject_dirs = [d for d in os.listdir(subjects_dir) if os.path.isdir(os.path.join(subjects_dir, d))]
     removed_trial_dict = {}
     for subject_dir in subject_dirs:
@@ -70,7 +68,7 @@ def drop_learning_nonlearner_invalid_trials():
         else:
             print(f'Behavioral file for {subject_dir} does not exist.')
 
-def drop_trials_events(): #after removing the trials from the behavioural tsv file, also update the events and marker files
+def drop_trials_events(subject_dirs, subjects_dir, removed_trial_dict): #after removing the trials from the behavioural tsv file, also update the events and marker files
     for subject_dir in subject_dirs:
         eeg_vmrk_path = os.path.join(subjects_dir, subject_dir, 'eeg', f'{subject_dir}_task-casinos_eeg.vmrk')
         eee_events_tsv_path = os.path.join(subjects_dir, subject_dir, 'eeg', f'{subject_dir}_task-casinos_events.tsv')
