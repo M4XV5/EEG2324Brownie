@@ -1,7 +1,7 @@
 # import all needed libraries
 import matplotlib.pyplot as plt
-# import statsmodels.api as sm
-# from statsmodels.formula.api import ols
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
 from scipy.stats import pearsonr
 from scipy.stats import chi2_contingency
 import shutil, errno
