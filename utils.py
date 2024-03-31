@@ -123,41 +123,6 @@ def drop_trials_events(subject_dirs, subjects_dir, removed_trial_dict): #after r
 
 
 
-
-################################
-
-# Plotting evoked potentials based on condition list 
-
-################################
-
-def plot_avg_evokeds(sub_list,cond_list,colors,linestyles,bids_root = "Dataset/ds004147-filtered-update"):
-    derivs_path = bids_root+"/derivatives/mne-bids-pipeline/"
-    evoked_ave_all = []
-    grand_avgs = []
-
-    # for each condition (task-cue combination), create a list of evoked responses across all subjects and then average
-    for i in range(0,len(cond_list)):
-        for sub in sub_list:
-            evoked_ave_all.append([])
-            evoked_ave_all[i].append(mne.Evoked(derivs_path+"sub-"+sub+"/eeg/sub-"+sub+"_task-casinos_ave.fif",proj=False,verbose=False,condition=cond_list[i]))
-        
-        # for this condition, average across subjects
-        grand_avgs.append(mne.grand_average(evoked_ave_all[i])) 
-    
-        # name of the condition/difference curve, so that it shows up in the plot
-        grand_avgs[i].comment=cond_list[i] 
-    
-        return mne.viz.plot_compare_evokeds(
-            grand_avgs,
-            combine="mean", # average erp across channels
-            picks="FCz", # if we want to see only FCz
-            colors=colors,
-            linestyles=linestyles,
-            ylim=dict(eeg=[-5, 20]),
-            title=('sub: ',sub_list),
-            time_unit="ms",
-        )
-        
 ################################
 
 # Linear Modelling
@@ -516,3 +481,34 @@ def ptp_annotate(subject_id):
         )
     print(new_anno)
     raw2.set_annotations(new_anno)
+
+
+# Plotting evoked potentials based on condition list 
+def plot_avg_evokeds(sub_list,cond_list,colors,linestyles,bids_root):
+    derivs_path = bids_root+"/derivatives/mne-bids-pipeline/"
+    evoked_ave_all = []
+    grand_avgs = []
+
+    # for each condition (task-cue combination), create a list of evoked responses across all subjects and then average
+    for i in range(0,len(cond_list)):
+        for sub in sub_list:
+            evoked_ave_all.append([])
+            evoked_ave_all[i].append(mne.Evoked(derivs_path+"sub-"+sub+"/eeg/sub-"+sub+"_task-casinos_ave.fif",proj=False,verbose=False,condition=cond_list[i]))
+        
+        # for this condition, average across subjects
+        grand_avgs.append(mne.grand_average(evoked_ave_all[i])) 
+    
+        # name of the condition/difference curve, so that it shows up in the plot
+        grand_avgs[i].comment=cond_list[i] 
+    
+    return mne.viz.plot_compare_evokeds(
+        grand_avgs,
+        combine="mean", # average erp across channels
+        picks="FCz", # if we want to see only FCz
+        colors=colors,
+        linestyles=linestyles,
+        ylim=dict(eeg=[-5, 20]),
+        title=('sub: ',sub_list),
+        time_unit="ms",
+    )
+        
