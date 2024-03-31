@@ -151,30 +151,13 @@ def plot_avg_evokeds(sub_list,cond_list,colors,linestyles,bids_root = "Dataset/d
             grand_avgs,
             combine="mean", # average erp across channels
             picks="FCz", # if we want to see only FCz
-            colors=
-                 {'Win LL':'r',
-                 'Win ML':'r',
-                 'Win MH':'r',
-                 'Win HH':'r',
-                 'Loss LL':'b',
-                 'Loss ML':'b',
-                 'Loss MH':'b',
-                 'Loss HH':'b'},
-            linestyles=
-                 {'Win LL':'solid',
-                 'Win ML':'dashed',
-                 'Win MH':'dashdot',
-                 'Win HH':'dotted',
-                 'Loss LL':'solid',
-                 'Loss ML':'dashed',
-                 'Loss MH':'dashdot',
-                 'Loss HH':'dotted'},
+            colors=colors,
+            linestyles=linestyles,
             ylim=dict(eeg=[-5, 20]),
             title=('sub: ',sub_list),
             time_unit="ms",
         )
         
-
 ################################
 
 # Linear Modelling
