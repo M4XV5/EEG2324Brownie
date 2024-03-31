@@ -1,7 +1,7 @@
 # import all needed libraries
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
+# import statsmodels.api as sm
+# from statsmodels.formula.api import ols
 from scipy.stats import pearsonr
 from scipy.stats import chi2_contingency
 import shutil, errno
@@ -121,6 +121,59 @@ def drop_trials_events(subject_dirs, subjects_dir, removed_trial_dict): #after r
         else:
             print(f'eeg.vmrk file for {subject_dir} does not exist.')
 
+
+
+
+################################
+
+# Plotting evoked potentials based on condition list 
+
+################################
+
+def plot_avg_evokeds(sub_list,cond_list,colors,linestyles,bids_root = "Dataset/ds004147-filtered-update"):
+    derivs_path = bids_root+"/derivatives/mne-bids-pipeline/"
+    evoked_ave_all = []
+    grand_avgs = []
+
+    # for each condition (task-cue combination), create a list of evoked responses across all subjects and then average
+    for i in range(0,len(cond_list)):
+        for sub in sub_list:
+            evoked_ave_all.append([])
+            evoked_ave_all[i].append(mne.Evoked(derivs_path+"sub-"+sub+"/eeg/sub-"+sub+"_task-casinos_ave.fif",proj=False,verbose=False,condition=cond_list[i]))
+        
+        # for this condition, average across subjects
+        grand_avgs.append(mne.grand_average(evoked_ave_all[i])) 
+    
+        # name of the condition/difference curve, so that it shows up in the plot
+        grand_avgs[i].comment=cond_list[i] 
+    
+        return mne.viz.plot_compare_evokeds(
+            grand_avgs,
+            combine="mean", # average erp across channels
+            picks="FCz", # if we want to see only FCz
+            colors=
+                 {'Win LL':'r',
+                 'Win ML':'r',
+                 'Win MH':'r',
+                 'Win HH':'r',
+                 'Loss LL':'b',
+                 'Loss ML':'b',
+                 'Loss MH':'b',
+                 'Loss HH':'b'},
+            linestyles=
+                 {'Win LL':'solid',
+                 'Win ML':'dashed',
+                 'Win MH':'dashdot',
+                 'Win HH':'dotted',
+                 'Loss LL':'solid',
+                 'Loss ML':'dashed',
+                 'Loss MH':'dashdot',
+                 'Loss HH':'dotted'},
+            ylim=dict(eeg=[-5, 20]),
+            title=('sub: ',sub_list),
+            time_unit="ms",
+        )
+        
 
 ################################
 
